@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Replacement Algorithm Visualizer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <p class="eyebrow">OPERATING SYSTEMS · INTERACTIVE LAB</p>
+  <h1>Page Replacement <span>Visualizer</span></h1>
+  <p>Explore virtual memory, visualize page faults and compare replacement strategies.</p>
+</header>
+<main class="layout">
+  <aside class="panel controls">
+    <h2>Simulation Setup</h2>
+    <label for="reference">Page reference string</label>
+    <textarea id="reference">7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2</textarea>
+    <small>Separate page numbers using commas or spaces. Up to 100 references.</small>
+    <label for="frameCount">Number of frames</label>
+    <input id="frameCount" type="number" min="1" max="8" value="3">
+    <label for="algorithm">Algorithm</label>
+    <select id="algorithm">
+      <option value="FIFO">FIFO — First In First Out</option>
+      <option value="LRU">LRU — Least Recently Used</option>
+      <option value="OPT">Optimal (OPT)</option>
+      <option value="LFU">LFU — Least Frequently Used</option>
+      <option value="MFU">MFU — Most Frequently Used</option>
+      <option value="CLOCK">Clock / Second Chance</option>
+    </select>
+    <label for="speed">Playback speed</label>
+    <select id="speed"><option value="1100">Slow</option><option value="600" selected>Normal</option><option value="250">Fast</option></select>
+    <div class="button-group">
+      <button id="run">Run simulation</button>
+      <button class="secondary" id="random">Randomize</button>
+      <button class="outline" id="reset">Reset</button>
+    </div>
+    <div class="button-group">
+      <button class="secondary" id="previous">← Previous</button>
+      <button class="secondary" id="next">Next →</button>
+      <button class="secondary" id="play">▶ Play</button>
+    </div>
+    <div class="button-group">
+      <button class="outline" id="showAll">Show all</button>
+      <button class="outline" id="export">Export CSV</button>
+    </div>
+    <p id="message" class="message">Ready. Press Run simulation.</p>
+    <div class="algorithm-note">
+      <h3>Algorithm notes</h3>
+      <p id="notes">FIFO replaces the page that entered memory first.</p>
+    </div>
+  </aside>
+  <section class="workspace">
+    <div class="metrics">
+      <article class="metric"><span>PAGE FAULTS</span><strong id="faults">—</strong></article>
+      <article class="metric"><span>PAGE HITS</span><strong id="hits">—</strong></article>
+      <article class="metric"><span>HIT RATIO</span><strong id="hitRatio">—</strong></article>
+      <article class="metric"><span>FAULT RATIO</span><strong id="faultRatio">—</strong></article>
+    </div>
+    <section class="panel">
+      <div class="section-heading"><h2>Memory Frame Timeline</h2><span class="pill" id="progress">Step 0 / 0</span></div>
+      <p class="muted">Green = page hit · Red = page fault · Highlight = current reference</p>
+      <div id="timeline" class="timeline"></div>
+      <div class="section-heading details"><p id="currentInfo" class="muted">Run a simulation to see frame activity.</p><span class="pill" id="victim">Victim: —</span></div>
+    </section>
+    <section class="panel section">
+      <div class="section-heading"><h2>Step-by-step trace</h2><span class="pill" id="rowCount">0 rows</span></div>
+      <div class="table-scroll"><table><thead><tr><th>Step</th><th>Page</th><th>Frame state</th><th>Result</th><th>Replaced</th></tr></thead><tbody id="trace"></tbody></table></div>
+    </section>
+    <section class="panel section">
+      <div class="section-heading"><h2>Algorithm comparison</h2><button class="secondary" id="compare">Compare all</button></div>
+      <div id="comparison" class="comparison"><p class="muted">Compare all algorithms on the same reference string and frame count.</p></div>
+    </section>
+  </section>
+</main>
+<footer>Page Replacement Algorithm Visualizer · Educational project · Runs locally in your browser</footer>
+<script src="script.js"></script>
+</body>
+</html>
